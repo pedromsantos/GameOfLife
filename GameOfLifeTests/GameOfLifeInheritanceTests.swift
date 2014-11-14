@@ -9,6 +9,7 @@ public class LiveCell : CellProtocol {
     private let neighbours:[CellProtocol]
     private let minimumViableNeighbours = 2
     private let maximumViableNeighbours = 3
+    private let cellCreationRules:[Bool : () -> CellProtocol]
     
     public convenience init() {
         self.init(neighbours: [CellProtocol]())
@@ -16,12 +17,14 @@ public class LiveCell : CellProtocol {
     
     public init(neighbours:[CellProtocol]) {
         self.neighbours = neighbours
+        self.cellCreationRules = [
+            true : {() -> CellProtocol in return LiveCell(neighbours: neighbours)},
+            false : {() -> CellProtocol in return DeadCell(neighbours: neighbours)}
+        ]
     }
     
     public func tick() -> CellProtocol {
-        return isAlive()
-            ? LiveCell(neighbours: self.neighbours)
-            : DeadCell(neighbours: self.neighbours)
+        return cellCreationRules[isAlive()]!()
     }
     
     private func isAlive() -> Bool {
