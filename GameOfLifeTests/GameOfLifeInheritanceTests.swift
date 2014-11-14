@@ -7,6 +7,8 @@ public protocol CellProtocol {
 
 public class LiveCell : CellProtocol {
     private let neighbours:[CellProtocol]
+    private let minimumViableNeighbours = 2
+    private let maximumViableNeighbours = 3
     
     public init() {
         self.neighbours = [CellProtocol]()
@@ -22,14 +24,17 @@ public class LiveCell : CellProtocol {
     
     private func isDead() -> Bool {
         let neighboursCount = neighbours.count
-        return neighboursCount < 2 || neighboursCount > 3
+        return neighboursCount < minimumViableNeighbours || neighboursCount > maximumViableNeighbours
     }
 }
 
 public class DeadCell : LiveCell {
     public override func tick() -> CellProtocol {
-        let neighboursCount = neighbours.count
-        return neighboursCount == 3 ? LiveCell(neighbours: self.neighbours) : DeadCell(neighbours: self.neighbours)
+        return isAlive() ? LiveCell(neighbours: self.neighbours) : DeadCell(neighbours: self.neighbours)
+    }
+    
+    private func isAlive() -> Bool {
+        return neighbours.count == maximumViableNeighbours
     }
 }
 
