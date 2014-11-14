@@ -5,34 +5,6 @@ public protocol CellProtocol {
     func tick() -> CellProtocol
 }
 
-public enum CellStatus:Int {
-    case Dead
-    case Alive
-    
-    public static func statusFrom(status:Bool) -> CellStatus {
-        return CellStatus(rawValue: Int(status))!
-    }
-}
-
-public class CellFactory {
-    private let cellCreationRules:[CellStatus : (neighbours:[CellProtocol]) -> CellProtocol]
-    
-    public init() {
-        self.cellCreationRules = [
-            CellStatus.Alive
-                : {(neighbourCells:[CellProtocol]) -> CellProtocol in
-                    return LiveCell(neighbours: neighbourCells)},
-            CellStatus.Dead
-                : {(neighbourCells:[CellProtocol]) -> CellProtocol in
-                    return DeadCell(neighbours: neighbourCells)}
-        ]
-    }
-    
-    public func createCell(status:CellStatus, neighbourCells:[CellProtocol]) -> CellProtocol {
-        return self.cellCreationRules[status]!(neighbours: neighbourCells)
-    }
-}
-
 public class LiveCell : CellProtocol {
     private let neighbours:[CellProtocol]
     private let cellFactory:CellFactory
@@ -63,6 +35,34 @@ public class DeadCell : LiveCell {
     private override func status() -> CellStatus {
         let isAlive = neighbours.count == maximumViableNeighbours
         return CellStatus.statusFrom(isAlive)
+    }
+}
+
+public class CellFactory {
+    private let cellCreationRules:[CellStatus : (neighbours:[CellProtocol]) -> CellProtocol]
+    
+    public init() {
+        self.cellCreationRules = [
+            CellStatus.Alive
+                : {(neighbourCells:[CellProtocol]) -> CellProtocol in
+                    return LiveCell(neighbours: neighbourCells)},
+            CellStatus.Dead
+                : {(neighbourCells:[CellProtocol]) -> CellProtocol in
+                    return DeadCell(neighbours: neighbourCells)}
+        ]
+    }
+    
+    public func createCell(status:CellStatus, neighbourCells:[CellProtocol]) -> CellProtocol {
+        return self.cellCreationRules[status]!(neighbours: neighbourCells)
+    }
+}
+
+public enum CellStatus:Int {
+    case Dead
+    case Alive
+    
+    public static func statusFrom(status:Bool) -> CellStatus {
+        return CellStatus(rawValue: Int(status))!
     }
 }
 
