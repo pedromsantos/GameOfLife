@@ -5,18 +5,31 @@ public protocol CellProtocol {
     func tick() -> CellProtocol
 }
 
+public enum CellStatus:Int {
+    case Dead
+    case Alive
+    
+    public static func statusFrom(status:Bool) -> CellStatus {
+        return CellStatus(rawValue: Int(status))!
+    }
+}
+
 public class CellFactory {
-    private let cellCreationRules:[Bool : (neighbours:[CellProtocol]) -> CellProtocol]
+    private let cellCreationRules:[CellStatus : (neighbours:[CellProtocol]) -> CellProtocol]
     
     public init() {
         self.cellCreationRules = [
-            true : {(neighbourCells:[CellProtocol]) -> CellProtocol in return LiveCell(neighbours: neighbourCells)},
-            false : {(neighbourCells:[CellProtocol]) -> CellProtocol in return DeadCell(neighbours: neighbourCells)}
+            CellStatus.Alive
+                : {(neighbourCells:[CellProtocol]) -> CellProtocol in
+                    return LiveCell(neighbours: neighbourCells)},
+            CellStatus.Dead
+                : {(neighbourCells:[CellProtocol]) -> CellProtocol in
+                    return DeadCell(neighbours: neighbourCells)}
         ]
     }
     
-    public func createCell(isAlive:Bool, neighbourCells:[CellProtocol]) -> CellProtocol {
-        return self.cellCreationRules[isAlive]!(neighbours: neighbourCells)
+    public func createCell(status:CellStatus, neighbourCells:[CellProtocol]) -> CellProtocol {
+        return self.cellCreationRules[status]!(neighbours: neighbourCells)
     }
 }
 
@@ -36,7 +49,8 @@ public class LiveCell : CellProtocol {
     }
     
     public func tick() -> CellProtocol {
-        return cellFactory.createCell(isAlive(), neighbourCells: self.neighbours)
+        let status = CellStatus.statusFrom(isAlive())
+        return cellFactory.createCell(status, neighbourCells: self.neighbours)
     }
     
     private func isAlive() -> Bool {
