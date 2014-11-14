@@ -17,8 +17,12 @@ public class LiveCell : CellProtocol {
     }
     
     public func tick() -> CellProtocol {
+        return isDead() ? DeadCell(neighbours: self.neighbours) : LiveCell(neighbours: self.neighbours)
+    }
+    
+    private func isDead() -> Bool {
         let neighboursCount = neighbours.count
-        return neighboursCount < 2 || neighboursCount > 3 ? DeadCell(neighbours: self.neighbours) : LiveCell(neighbours: self.neighbours)
+        return neighboursCount < 2 || neighboursCount > 3
     }
 }
 
