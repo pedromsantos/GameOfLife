@@ -69,21 +69,18 @@ public enum CellStatus:Int {
 public class GameOfLifeInheritanceTests: XCTestCase {
     func testThatItShouldSetLivingCellToDeadCellWhenItHasLessThanTwoLiveNeighbours() {
         let cell = createLivingCellWithNeighbours()
-        
         let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell is DeadCell)
     }
     
     func testThatItShouldSetLivingCellToDeadCellWhenItHasMoreThanThreeLiveNeighbours() {
         let cell = createLivingCellWithNeighbours(neighbours: 4)
-        
         let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell is DeadCell)
     }
 
     func testThatItShouldSeDeadCellToLivingCellWhenItHasExactlyThreeLiveNeighbours() {
         let cell = createDeadCellWithNeighbours(neighbours: 3)
-        
         let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell is LiveCell)
     }
@@ -98,7 +95,6 @@ public class GameOfLifeInheritanceTests: XCTestCase {
     
     private func createCellNeighbours(neighbours:Int) -> [CellProtocol] {
         var cellNeighbours = [CellProtocol]()
-        
         for var i = 0; i < neighbours; i++ {
             cellNeighbours.append(LiveCell())
         }
