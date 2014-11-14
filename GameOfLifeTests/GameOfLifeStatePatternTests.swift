@@ -34,14 +34,19 @@ public protocol LifeState {
 }
 
 public class Live : LifeState {
+    private let minimumViableNeighbours = 2
+    private let maximumViableNeighbours = 3
+    
     public func handle(cell:Cell) -> LifeState  {
-        return cell.neighbouringCells > 2 && cell.neighbouringCells <= 3 ? self : Dead()
+        return cell.neighbouringCells > minimumViableNeighbours && cell.neighbouringCells <= maximumViableNeighbours ? self : Dead()
     }
 }
 
 public class Dead : LifeState {
+    private let maximumViableNeighbours = 3
+    
     public func handle(cell:Cell) -> LifeState {
-        return cell.neighbouringCells == 3 ? Live() : self
+        return cell.neighbouringCells == maximumViableNeighbours ? Live() : self
     }
 }
 
