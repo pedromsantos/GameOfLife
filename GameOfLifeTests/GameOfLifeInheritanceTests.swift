@@ -1,29 +1,32 @@
 import UIKit
 import XCTest
 
-public class BaseCell {
-    private let neighbours:[Cell]
+public protocol CellProtocol {
+    func tick() -> CellProtocol
+}
+
+public class LiveCell : CellProtocol {
+    private let neighbours:[CellProtocol]
     
     public init() {
-        self.neighbours = [Cell]()
+        self.neighbours = [CellProtocol]()
     }
     
-    public init(neighbours:[Cell]) {
+    public init(neighbours:[CellProtocol]) {
         self.neighbours = neighbours
     }
     
-    public func tick() -> BaseCell {
-        return self
+    public func tick() -> CellProtocol {
+        let neighboursCount = neighbours.count
+        return neighboursCount < 2 || neighboursCount > 3 ? DeadCell(neighbours: self.neighbours) : LiveCell(neighbours: self.neighbours)
     }
 }
 
-public class LiveCell : BaseCell {
-    public override func tick() -> BaseCell {
-        return neighbours.count < 2 ? DeadCell(neighbours: self.neighbours) : LiveCell(neighbours: self.neighbours)
+public class DeadCell : LiveCell {
+    public override func tick() -> CellProtocol {
+        let neighboursCount = neighbours.count
+        return neighboursCount == 3 ? LiveCell(neighbours: self.neighbours) : DeadCell(neighbours: self.neighbours)
     }
-}
-
-public class DeadCell : BaseCell {
 }
 
 public class GameOfLifeHinreritanceTests: XCTestCase {
@@ -32,5 +35,19 @@ public class GameOfLifeHinreritanceTests: XCTestCase {
         
         let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell is DeadCell)
+    }
+    
+    func testThatItShouldSetLivingCellToDeadCellWhenItHasMoreThanThreeLiveNeighbours() {
+        let cell = LiveCell(neighbours:[LiveCell(), LiveCell(), LiveCell(), LiveCell()])
+        
+        let resultingCell = cell.tick()
+        XCTAssertTrue(resultingCell is DeadCell)
+    }
+
+    func testThatItShouldSeDeadCellToLivingCellWhenItHasExactlyThreeLiveNeighbours() {
+        let cell = DeadCell(neighbours:[LiveCell(), LiveCell(), LiveCell()])
+        
+        let resultingCell = cell.tick()
+        XCTAssertTrue(resultingCell is LiveCell)
     }
 }
