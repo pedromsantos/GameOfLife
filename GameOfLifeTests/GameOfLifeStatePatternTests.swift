@@ -1,15 +1,6 @@
 import UIKit
 import XCTest
 
-public enum CellState:Int {
-    case Dead
-    case Alive
-    
-    public static func statusFrom(status:Bool) -> CellState {
-        return CellState(rawValue: Int(status))!
-    }
-}
-
 public class Cell {
     private let state:LifeState = Live()
     private let neighbours:[Cell]
@@ -40,21 +31,6 @@ public protocol LifeState {
     func handle(cell:Cell) -> LifeState
 }
 
-public class LifeStateFactory {
-    private let stateCreationRules:[CellState : () -> LifeState]
-    
-    public init() {
-        self.stateCreationRules = [
-            CellState.Alive : {() -> LifeState in return Live()},
-            CellState.Dead : {() -> LifeState in return Dead()}
-        ]
-    }
-    
-    public func createLifeState(isAlive:CellState) -> LifeState {
-        return stateCreationRules[isAlive]!()
-    }
-}
-
 public class Live : LifeState {
     private let minimumViableNeighbours = 2
     private let maximumViableNeighbours = 3
@@ -80,6 +56,30 @@ public class Dead : Live {
     private override func isAlive(cell:Cell) -> CellState {
         let isAlive = cell.neighbouringCells == maximumViableNeighbours
         return CellState.statusFrom(isAlive)
+    }
+}
+
+public enum CellState:Int {
+    case Dead
+    case Alive
+    
+    public static func statusFrom(status:Bool) -> CellState {
+        return CellState(rawValue: Int(status))!
+    }
+}
+
+public class LifeStateFactory {
+    private let stateCreationRules:[CellState : () -> LifeState]
+    
+    public init() {
+        self.stateCreationRules = [
+            CellState.Alive : {() -> LifeState in return Live()},
+            CellState.Dead : {() -> LifeState in return Dead()}
+        ]
+    }
+    
+    public func createLifeState(isAlive:CellState) -> LifeState {
+        return stateCreationRules[isAlive]!()
     }
 }
 
