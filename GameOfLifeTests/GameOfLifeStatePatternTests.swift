@@ -49,14 +49,14 @@ public class Live : LifeState {
         let isAlive = cell.neighbouringCells > minimumViableNeighbours
             && cell.neighbouringCells <= maximumViableNeighbours
         
-        return CellState.statusFrom(isAlive)
+        return CellState.stateFrom(isAlive)
     }
 }
 
 public class Dead : Live {
     private override func isAlive(cell:Cell) -> CellState {
         let isAlive = cell.neighbouringCells == maximumViableNeighbours
-        return CellState.statusFrom(isAlive)
+        return CellState.stateFrom(isAlive)
     }
 }
 
@@ -79,7 +79,7 @@ public enum CellState:Int {
     case Dead
     case Alive
     
-    public static func statusFrom(status:Bool) -> CellState {
+    public static func stateFrom(status:Bool) -> CellState {
         return CellState(rawValue: Int(status))!
     }
 }
