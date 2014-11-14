@@ -13,6 +13,7 @@
 		CF2C24821A1617F9005F1378 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF2C24811A1617F9005F1378 /* Images.xcassets */; };
 		CF2C24851A1617F9005F1378 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF2C24831A1617F9005F1378 /* LaunchScreen.xib */; };
 		CF2C24911A1617FA005F1378 /* GameOfLifeStatePatternTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2C24901A1617FA005F1378 /* GameOfLifeStatePatternTests.swift */; };
+		CFAE151B1A1625E60017C7E8 /* GameOfLifeInheritanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFAE151A1A1625E60017C7E8 /* GameOfLifeInheritanceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		CF2C248A1A1617FA005F1378 /* GameOfLifeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameOfLifeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF2C248F1A1617FA005F1378 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF2C24901A1617FA005F1378 /* GameOfLifeStatePatternTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOfLifeStatePatternTests.swift; sourceTree = "<group>"; };
+		CFAE151A1A1625E60017C7E8 /* GameOfLifeInheritanceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOfLifeInheritanceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				CF2C24901A1617FA005F1378 /* GameOfLifeStatePatternTests.swift */,
+				CFAE151A1A1625E60017C7E8 /* GameOfLifeInheritanceTests.swift */,
 				CF2C248E1A1617FA005F1378 /* Supporting Files */,
 			);
 			path = GameOfLifeTests;
@@ -221,6 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFAE151B1A1625E60017C7E8 /* GameOfLifeInheritanceTests.swift in Sources */,
 				CF2C24911A1617FA005F1378 /* GameOfLifeStatePatternTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
