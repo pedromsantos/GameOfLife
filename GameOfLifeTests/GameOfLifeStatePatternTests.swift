@@ -97,7 +97,7 @@ public class GameOfLifeStatePatternTests: XCTestCase {
         XCTAssertTrue(resultingCell.state is Dead)
     }
     
-    func testThatItShouldSeDeadCellToLivingCellWhenItHasExactlyThreeLiveNeighbours() {
+    func testThatItShouldSetDeadCellToLivingCellWhenItHasExactlyThreeLiveNeighbours() {
         let cell = createCellWithNeighbours(state:Dead(), neighbours: 3)
         let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell.state is Live)

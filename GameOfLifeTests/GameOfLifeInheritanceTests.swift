@@ -79,7 +79,7 @@ public class GameOfLifeInheritanceTests: XCTestCase {
         XCTAssertTrue(resultingCell is DeadCell)
     }
 
-    func testThatItShouldSeDeadCellToLivingCellWhenItHasExactlyThreeLiveNeighbours() {
+    func testThatItShouldSetDeadCellToLivingCellWhenItHasExactlyThreeLiveNeighbours() {
         let cell = createDeadCellWithNeighbours(neighbours: 3)
         let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell is LiveCell)
