@@ -55,13 +55,14 @@ public class LiveCell : CellProtocol {
     private func status() -> CellStatus {
         let neighboursCount = neighbours.count
         let isAlive = neighboursCount >= minimumViableNeighbours && neighboursCount <= maximumViableNeighbours
-        return isAlive ? CellStatus.Alive : CellStatus.Dead
+        return CellStatus.statusFrom(isAlive)
     }
 }
 
 public class DeadCell : LiveCell {
     private override func status() -> CellStatus {
-        return neighbours.count == maximumViableNeighbours ? CellStatus.Alive : CellStatus.Dead
+        let isAlive = neighbours.count == maximumViableNeighbours
+        return CellStatus.statusFrom(isAlive)
     }
 }
 

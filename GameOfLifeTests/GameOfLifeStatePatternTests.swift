@@ -1,6 +1,15 @@
 import UIKit
 import XCTest
 
+public enum CellState:Int {
+    case Dead
+    case Alive
+    
+    public static func statusFrom(status:Bool) -> CellState {
+        return CellState(rawValue: Int(status))!
+    }
+}
+
 public class Cell {
     private let state:LifeState = Live()
     private let neighbours:[Cell]
@@ -32,16 +41,16 @@ public protocol LifeState {
 }
 
 public class LifeStateFactory {
-    private let stateCreationRules:[Bool : () -> LifeState]
+    private let stateCreationRules:[CellState : () -> LifeState]
     
     public init() {
         self.stateCreationRules = [
-            true : {() -> LifeState in return Live()},
-            false : {() -> LifeState in return Dead()}
+            CellState.Alive : {() -> LifeState in return Live()},
+            CellState.Dead : {() -> LifeState in return Dead()}
         ]
     }
     
-    public func createLifeState(isAlive:Bool) -> LifeState {
+    public func createLifeState(isAlive:CellState) -> LifeState {
         return stateCreationRules[isAlive]!()
     }
 }
@@ -59,15 +68,18 @@ public class Live : LifeState {
         return lifeStateFactory.createLifeState(isAlive(cell))
     }
     
-    private func isAlive(cell:Cell) -> Bool {
-        return cell.neighbouringCells > minimumViableNeighbours
+    private func isAlive(cell:Cell) -> CellState {
+        let isAlive = cell.neighbouringCells > minimumViableNeighbours
             && cell.neighbouringCells <= maximumViableNeighbours
+        
+        return CellState.statusFrom(isAlive)
     }
 }
 
 public class Dead : Live {
-    private override func isAlive(cell:Cell) -> Bool {
-        return cell.neighbouringCells == maximumViableNeighbours
+    private override func isAlive(cell:Cell) -> CellState {
+        let isAlive = cell.neighbouringCells == maximumViableNeighbours
+        return CellState.statusFrom(isAlive)
     }
 }
 
