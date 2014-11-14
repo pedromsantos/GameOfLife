@@ -35,11 +35,17 @@ public protocol LifeState {
 public class Live : LifeState {
     private let minimumViableNeighbours = 2
     private let maximumViableNeighbours = 3
+    private let stateCreationRules:[Bool : () -> LifeState]
+    
+    public init() {
+        self.stateCreationRules = [
+            true : {() -> LifeState in return Live()},
+            false : {() -> LifeState in return Dead()}
+        ]
+    }
     
     public func handle(cell:Cell) -> LifeState  {
-        return isAlive(cell)
-            ? Live()
-            : Dead()
+        return stateCreationRules[isAlive(cell)]!()
     }
     
     private func isAlive(cell:Cell) -> Bool {
