@@ -41,7 +41,7 @@ public class LifeStateFactory {
         ]
     }
     
-    public func createCellState(isAlive:Bool) -> LifeState {
+    public func createLifeState(isAlive:Bool) -> LifeState {
         return stateCreationRules[isAlive]!()
     }
 }
@@ -56,7 +56,7 @@ public class Live : LifeState {
     }
     
     public func handle(cell:Cell) -> LifeState  {
-        return self.lifeStateFactory.createCellState(isAlive(cell))
+        return lifeStateFactory.createLifeState(isAlive(cell))
     }
     
     private func isAlive(cell:Cell) -> Bool {
