@@ -5,11 +5,26 @@ public protocol CellProtocol {
     func tick() -> CellProtocol
 }
 
+public class CellFactory {
+    private let cellCreationRules:[Bool : (neighbours:[CellProtocol]) -> CellProtocol]
+    
+    public init() {
+        self.cellCreationRules = [
+            true : {(neighbourCells:[CellProtocol]) -> CellProtocol in return LiveCell(neighbours: neighbourCells)},
+            false : {(neighbourCells:[CellProtocol]) -> CellProtocol in return DeadCell(neighbours: neighbourCells)}
+        ]
+    }
+    
+    public func createCell(isAlive:Bool, neighbourCells:[CellProtocol]) -> CellProtocol {
+        return self.cellCreationRules[isAlive]!(neighbours: neighbourCells)
+    }
+}
+
 public class LiveCell : CellProtocol {
     private let neighbours:[CellProtocol]
+    private let cellFactory:CellFactory
     private let minimumViableNeighbours = 2
     private let maximumViableNeighbours = 3
-    private let cellCreationRules:[Bool : () -> CellProtocol]
     
     public convenience init() {
         self.init(neighbours: [CellProtocol]())
@@ -17,14 +32,11 @@ public class LiveCell : CellProtocol {
     
     public init(neighbours:[CellProtocol]) {
         self.neighbours = neighbours
-        self.cellCreationRules = [
-            true : {() -> CellProtocol in return LiveCell(neighbours: neighbours)},
-            false : {() -> CellProtocol in return DeadCell(neighbours: neighbours)}
-        ]
+        self.cellFactory = CellFactory()
     }
     
     public func tick() -> CellProtocol {
-        return cellCreationRules[isAlive()]!()
+        return cellFactory.createCell(isAlive(), neighbourCells: self.neighbours)
     }
     
     private func isAlive() -> Bool {
