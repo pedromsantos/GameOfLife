@@ -86,23 +86,33 @@ public enum CellState:Int {
 
 public class GameOfLifeStatePatternTests: XCTestCase {
     func testThatItShouldSetLivingCellToDeadCellWhenItHasLessThanTwoLiveNeighbours() {
-        let cell = Cell()
-        
+        let cell = createCellWithNeighbours()
         let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell.state is Dead)
     }
     
     func testThatItShouldSetLivingCellToDeadCellWhenItHasMoreThanThreeLiveNeighbours() {
-        let cell = Cell(state:Live(), neighbours:[Cell(), Cell(), Cell(), Cell()])
-        
+        let cell = createCellWithNeighbours(neighbours: 4)
         let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell.state is Dead)
     }
     
     func testThatItShouldSeDeadCellToLivingCellWhenItHasExactlyThreeLiveNeighbours() {
-        let cell = Cell(state:Dead(), neighbours:[Cell(), Cell(), Cell()])
-        
+        let cell = createCellWithNeighbours(state:Dead(), neighbours: 3)
         let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell.state is Live)
+    }
+    
+    private func createCellWithNeighbours(state:LifeState = Live(), neighbours:Int = 0) -> Cell {
+        return Cell(state: state, neighbours: createCellNeighbours(neighbours))
+    }
+    
+    private func createCellNeighbours(neighbours:Int) -> [Cell] {
+        var cellNeighbours = [Cell]()
+        for var i = 0; i < neighbours; i++ {
+            cellNeighbours.append(Cell())
+        }
+        
+        return cellNeighbours
     }
 }
