@@ -29,7 +29,7 @@ public class DeadCell : LiveCell {
     }
 }
 
-public class GameOfLifeHinreritanceTests: XCTestCase {
+public class GameOfLifeInheritanceTests: XCTestCase {
     func testThatItShouldSetLivingCellToDeadCellWhenItHasLessThanTwoLiveNeighbours() {
         let cell = LiveCell()
         
