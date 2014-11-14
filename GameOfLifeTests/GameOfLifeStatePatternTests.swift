@@ -15,7 +15,8 @@ public class Cell {
     }
     
     public func tick() -> Cell {
-        return Cell(state: state.handle(self), neighbours: self.neighbours)
+        let resultingLifeState = state.handle(self)
+        return Cell(state: resultingLifeState, neighbours: self.neighbours)
     }
     
     public var State:LifeState {
