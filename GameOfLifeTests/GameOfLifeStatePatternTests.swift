@@ -2,7 +2,6 @@ import UIKit
 import XCTest
 
 public class Cell {
-    
     private let state:LifeState = Live()
     private let neighbours:[Cell]
     
@@ -32,9 +31,7 @@ public protocol LifeState {
     func handle(cell:Cell) -> LifeState
 }
 
-public class Live : LifeState {
-    private let minimumViableNeighbours = 2
-    private let maximumViableNeighbours = 3
+public class LifeStateFactory {
     private let stateCreationRules:[Bool : () -> LifeState]
     
     public init() {
@@ -44,8 +41,22 @@ public class Live : LifeState {
         ]
     }
     
+    public func createCellState(isAlive:Bool) -> LifeState {
+        return stateCreationRules[isAlive]!()
+    }
+}
+
+public class Live : LifeState {
+    private let minimumViableNeighbours = 2
+    private let maximumViableNeighbours = 3
+    private let lifeStateFactory:LifeStateFactory
+    
+    public init() {
+        self.lifeStateFactory = LifeStateFactory()
+    }
+    
     public func handle(cell:Cell) -> LifeState  {
-        return stateCreationRules[isAlive(cell)]!()
+        return self.lifeStateFactory.createCellState(isAlive(cell))
     }
     
     private func isAlive(cell:Cell) -> Bool {
