@@ -12,7 +12,7 @@
 		CF2C24801A1617F9005F1378 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF2C247E1A1617F9005F1378 /* Main.storyboard */; };
 		CF2C24821A1617F9005F1378 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF2C24811A1617F9005F1378 /* Images.xcassets */; };
 		CF2C24851A1617F9005F1378 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF2C24831A1617F9005F1378 /* LaunchScreen.xib */; };
-		CF2C24911A1617FA005F1378 /* GameOfLifeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2C24901A1617FA005F1378 /* GameOfLifeTests.swift */; };
+		CF2C24911A1617FA005F1378 /* GameOfLifeStatePatternTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2C24901A1617FA005F1378 /* GameOfLifeStatePatternTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +35,7 @@
 		CF2C24841A1617F9005F1378 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		CF2C248A1A1617FA005F1378 /* GameOfLifeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameOfLifeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF2C248F1A1617FA005F1378 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CF2C24901A1617FA005F1378 /* GameOfLifeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOfLifeTests.swift; sourceTree = "<group>"; };
+		CF2C24901A1617FA005F1378 /* GameOfLifeStatePatternTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOfLifeStatePatternTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +98,7 @@
 		CF2C248D1A1617FA005F1378 /* GameOfLifeTests */ = {
 			isa = PBXGroup;
 			children = (
-				CF2C24901A1617FA005F1378 /* GameOfLifeTests.swift */,
+				CF2C24901A1617FA005F1378 /* GameOfLifeStatePatternTests.swift */,
 				CF2C248E1A1617FA005F1378 /* Supporting Files */,
 			);
 			path = GameOfLifeTests;
@@ -221,7 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF2C24911A1617FA005F1378 /* GameOfLifeTests.swift in Sources */,
+				CF2C24911A1617FA005F1378 /* GameOfLifeStatePatternTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +405,7 @@
 				CF2C24961A1617FA005F1378 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CF2C24971A1617FA005F1378 /* Build configuration list for PBXNativeTarget "GameOfLifeTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +414,7 @@
 				CF2C24991A1617FA005F1378 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

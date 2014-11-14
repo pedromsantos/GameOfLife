@@ -45,7 +45,7 @@ public class Dead : LifeState {
     }
 }
 
-public class GameOfLifeTests: XCTestCase {
+public class GameOfLifeStatePatternTests: XCTestCase {
     func testThatItShouldSetLivingCellToDeadCellWhenItHasLessThanTwoLiveNeighbours() {
         let cell = Cell()
         
