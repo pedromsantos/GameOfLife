@@ -68,23 +68,41 @@ public enum CellStatus:Int {
 
 public class GameOfLifeInheritanceTests: XCTestCase {
     func testThatItShouldSetLivingCellToDeadCellWhenItHasLessThanTwoLiveNeighbours() {
-        let cell = LiveCell()
+        let cell = createLivingCellWithNeighbours()
         
         let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell is DeadCell)
     }
     
     func testThatItShouldSetLivingCellToDeadCellWhenItHasMoreThanThreeLiveNeighbours() {
-        let cell = LiveCell(neighbours:[LiveCell(), LiveCell(), LiveCell(), LiveCell()])
+        let cell = createLivingCellWithNeighbours(neighbours: 4)
         
         let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell is DeadCell)
     }
 
     func testThatItShouldSeDeadCellToLivingCellWhenItHasExactlyThreeLiveNeighbours() {
-        let cell = DeadCell(neighbours:[LiveCell(), LiveCell(), LiveCell()])
+        let cell = createDeadCellWithNeighbours(neighbours: 3)
         
         let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell is LiveCell)
+    }
+    
+    private func createLivingCellWithNeighbours(neighbours:Int = 0) -> CellProtocol {
+        return LiveCell(neighbours: createCellNeighbours(neighbours))
+    }
+    
+    private func createDeadCellWithNeighbours(neighbours:Int = 0) -> CellProtocol {
+        return DeadCell(neighbours: createCellNeighbours(neighbours))
+    }
+    
+    private func createCellNeighbours(neighbours:Int) -> [CellProtocol] {
+        var cellNeighbours = [CellProtocol]()
+        
+        for var i = 0; i < neighbours; i++ {
+            cellNeighbours.append(LiveCell())
+        }
+        
+        return cellNeighbours
     }
 }
