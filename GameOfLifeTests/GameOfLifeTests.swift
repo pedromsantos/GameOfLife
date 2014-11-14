@@ -16,7 +16,7 @@ public class Cell {
         self.neighbours = neighbours
     }
     
-    public func iterate() -> Cell {
+    public func tick() -> Cell {
         return Cell(state: state.handle(self), neighbours: self.neighbours)
     }
     
@@ -24,8 +24,8 @@ public class Cell {
         return state
     }
     
-    public func isAlive() -> Bool {
-        return self.neighbours.count > 2 && self.neighbours.count <= 3
+    public var neighbouringCells:Int {
+        return self.neighbours.count
     }
 }
 
@@ -35,37 +35,35 @@ public protocol LifeState {
 
 public class Live : LifeState {
     public func handle(cell:Cell) -> LifeState  {
-        return cell.isAlive() ? self: Dead() // don't like this, violates Tell don't ask principle
+        return cell.neighbouringCells > 2 && cell.neighbouringCells <= 3 ? self : Dead()
     }
 }
 
 public class Dead : LifeState {
     public func handle(cell:Cell) -> LifeState {
-        return self
+        return cell.neighbouringCells == 3 ? Live() : self
     }
 }
 
 public class GameOfLifeTests: XCTestCase {
-    
-    override public func setUp() {
-        super.setUp()
-    }
-    
-    override public func tearDown() {
-        super.tearDown()
-    }
-    
     func testThatItShouldSetLivingCellToDeadCellWhenItHasLessThanTwoLiveNeighbours() {
         let cell = Cell()
         
-        let resultingCell = cell.iterate()
-        XCTAssertTrue(resultingCell.state
-            is Dead)
+        let resultingCell = cell.tick()
+        XCTAssertTrue(resultingCell.state is Dead)
     }
+    
     func testThatItShouldSetLivingCellToDeadCellWhenItHasMoreThanThreeLiveNeighbours() {
         let cell = Cell(state:Live(), neighbours:[Cell(), Cell(), Cell(), Cell()])
         
-        let resultingCell = cell.iterate()
+        let resultingCell = cell.tick()
         XCTAssertTrue(resultingCell.state is Dead)
+    }
+    
+    func testThatItShouldSeDeadCellToLivingCellWhenItHasExactlyThreeLiveNeighbours() {
+        let cell = Cell(state:Dead(), neighbours:[Cell(), Cell(), Cell()])
+        
+        let resultingCell = cell.tick()
+        XCTAssertTrue(resultingCell.state is Live)
     }
 }
