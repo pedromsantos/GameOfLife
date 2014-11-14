@@ -10,8 +10,8 @@ public class LiveCell : CellProtocol {
     private let minimumViableNeighbours = 2
     private let maximumViableNeighbours = 3
     
-    public init() {
-        self.neighbours = [CellProtocol]()
+    public convenience init() {
+        self.init(neighbours: [CellProtocol]())
     }
     
     public init(neighbours:[CellProtocol]) {

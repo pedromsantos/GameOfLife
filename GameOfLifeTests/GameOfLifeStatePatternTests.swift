@@ -6,9 +6,8 @@ public class Cell {
     private let state:LifeState = Live()
     private let neighbours:[Cell]
     
-    public init() {
-        self.state = Live()
-        self.neighbours = [Cell]()
+    public convenience init() {
+        self.init(state: Live(), neighbours: [Cell]())
     }
     
     public init(state:LifeState, neighbours:[Cell]) {
