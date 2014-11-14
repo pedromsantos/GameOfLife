@@ -38,20 +38,20 @@ public class Live : LifeState {
     private let maximumViableNeighbours = 3
     
     public func handle(cell:Cell) -> LifeState  {
+        return isAlive(cell)
+            ? Live()
+            : Dead()
+    }
+    
+    private func isAlive(cell:Cell) -> Bool {
         return cell.neighbouringCells > minimumViableNeighbours
             && cell.neighbouringCells <= maximumViableNeighbours
-            ? self
-            : Dead()
     }
 }
 
-public class Dead : LifeState {
-    private let maximumViableNeighbours = 3
-    
-    public func handle(cell:Cell) -> LifeState {
+public class Dead : Live {
+    private override func isAlive(cell:Cell) -> Bool {
         return cell.neighbouringCells == maximumViableNeighbours
-            ? Live()
-            : self
     }
 }
 
