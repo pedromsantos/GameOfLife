@@ -49,19 +49,19 @@ public class LiveCell : CellProtocol {
     }
     
     public func tick() -> CellProtocol {
-        let status = CellStatus.statusFrom(isAlive())
-        return cellFactory.createCell(status, neighbourCells: self.neighbours)
+        return cellFactory.createCell(status(), neighbourCells: self.neighbours)
     }
     
-    private func isAlive() -> Bool {
+    private func status() -> CellStatus {
         let neighboursCount = neighbours.count
-        return neighboursCount >= minimumViableNeighbours && neighboursCount <= maximumViableNeighbours
+        let isAlive = neighboursCount >= minimumViableNeighbours && neighboursCount <= maximumViableNeighbours
+        return isAlive ? CellStatus.Alive : CellStatus.Dead
     }
 }
 
 public class DeadCell : LiveCell {
-    private override func isAlive() -> Bool {
-        return neighbours.count == maximumViableNeighbours
+    private override func status() -> CellStatus {
+        return neighbours.count == maximumViableNeighbours ? CellStatus.Alive : CellStatus.Dead
     }
 }
 
